@@ -38,7 +38,7 @@ class Vuelos extends \yii\db\ActiveRecord
         return [
             [['origen_id', 'destino_id', 'compania_id', 'salida', 'llegada', 'plazas', 'precio'], 'required'],
             [['origen_id', 'destino_id', 'compania_id'], 'default', 'value' => null],
-            [['origen_id', 'destino_id', 'compania_id', 'plazas'], 'integer', min => 0],
+            [['origen_id', 'destino_id', 'compania_id', 'plazas'], 'integer', 'min' => 0],
             [['salida', 'llegada'], 'safe'],
             [['precio'], 'number'],
             [['codigo'], 'string', 'max' => 6],
