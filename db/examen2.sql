@@ -6,6 +6,11 @@ CREATE TABLE usuarios (
   , password   varchar(255) NOT NULL
 );
 
+INSERT
+    INTO usuarios (nombre, password)
+  VALUES ('pepe', crypt('pepe', gen_salt('bf', 11)))
+         ,('juan', crypt('juan', gen_salt('bf', 11)));
+
 DROP TABLE IF EXISTS aeropuertos CASCADE;
 
 CREATE TABLE aeropuertos (

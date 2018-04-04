@@ -2,17 +2,18 @@
 
 namespace app\controllers;
 
-use Yii;
 use app\models\Reservas;
 use app\models\ReservasSearch;
+use Yii;
+use yii\filters\
+VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * RreservasController implements the CRUD actions for Reservas model.
  */
-class RreservasController extends Controller
+class ReservasController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -46,7 +47,7 @@ class RreservasController extends Controller
 
     /**
      * Displays a single Reservas model.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -78,7 +79,7 @@ class RreservasController extends Controller
     /**
      * Updates an existing Reservas model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -98,7 +99,7 @@ class RreservasController extends Controller
     /**
      * Deletes an existing Reservas model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param int $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -112,7 +113,7 @@ class RreservasController extends Controller
     /**
      * Finds the Reservas model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
+     * @param int $id
      * @return Reservas the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
