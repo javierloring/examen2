@@ -19,12 +19,24 @@ CREATE TABLE aeropuertos (
   , denominacion varchar(255) NOT NULL
 );
 
+INSERT
+    INTO aeropuertos (codigo, denominacion)
+VALUES ('XRY', 'Jerez')
+     , ('SVQ', 'Sevilla')
+     , ('STD', 'Santander');
+
+
 DROP TABLE IF EXISTS companias CASCADE;
 
 CREATE TABLE companias (
     id           bigserial    PRIMARY KEY
   , denominacion varchar(255) NOT NULL
 );
+
+INSERT
+    INTO companias (denominacion)
+    VALUES ('Iberia')
+    ,('Rayanair');
 
 DROP TABLE IF EXISTS vuelos CASCADE;
 
