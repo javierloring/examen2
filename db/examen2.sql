@@ -23,7 +23,7 @@ INSERT
     INTO aeropuertos (codigo, denominacion)
 VALUES ('XRY', 'Jerez')
      , ('SVQ', 'Sevilla')
-     , ('STD', 'Santander');
+     , ('STD', 'Londres Stansted');
 
 
 DROP TABLE IF EXISTS companias CASCADE;
@@ -36,7 +36,7 @@ CREATE TABLE companias (
 INSERT
     INTO companias (denominacion)
     VALUES ('Iberia')
-    ,('Rayanair');
+    ,('Ryanair');
 
 DROP TABLE IF EXISTS vuelos CASCADE;
 
@@ -55,6 +55,10 @@ CREATE TABLE vuelos (
   , plazas      numeric(3)   NOT NULL
   , precio      numeric(8,2) NOT NULL
 );
+
+INSERT
+    INTO vuelos (codigo, origen_id, destino_id, compania_id, salida, llegada, plazas, precio)
+  VALUES ('IB4341', 1, 2, 1, '2018-04-23 16:35:00', '2018-04-23 19:00:00', 300, 50);
 
 DROP TABLE IF EXISTS reservas CASCADE;
 
