@@ -16,15 +16,20 @@ class VuelosSearch extends Vuelos
     public function rules()
     {
         return [
-            [['codigo'], 'filter', 'filter' => 'mb_strtoupper'],
-            [['salida', 'llegada', 'origen.codigo', 'destino.codigo', 'compania.denominacion'], 'safe'],
-            [['plazas', 'precio'], 'number'],
+            [['codigo', 'origen.codigo', 'destino.codigo'], 'filter', 'filter' => 'mb_strtoupper'],
+            [['salida', 'llegada', 'compania.denominacion'], 'safe'],
+            [['plazas', 'precio', 'plazas_libres'], 'number'],
         ];
     }
 
     public function attributes()
     {
-        return array_merge(parent::attributes(), ['origen.codigo', 'destino.codigo', 'compania.denominacion']);
+        return array_merge(parent::attributes(), [
+            'origen.codigo',
+            'destino.codigo',
+            'compania.denominacion',
+            'plazas_libres',
+        ]);
     }
 
     /**
@@ -61,8 +66,13 @@ class VuelosSearch extends Vuelos
             return $dataProvider;
         }
 
-        $query->joinwith(['origen o', 'destino d', 'compania c']);
+        $query->joinwith(['origen o', 'destino d', 'compania c'])
+            ->addGroupBy('o.codigo, d.codigo, c.denominacion');
 
+        $dataProvider->sort->attributes['plazas_libres'] = [
+            'asc' => ['plazas_libres' => SORT_ASC],
+            'desc' => ['plazas_libres' => SORT_DESC],
+        ];
         $dataProvider->sort->attributes['origen.codigo'] = [
             'asc' => ['o.codigo' => SORT_ASC],
             'desc' => ['o.codigo' => SORT_DESC],
@@ -90,7 +100,11 @@ class VuelosSearch extends Vuelos
             'precio' => $this->precio,
         ]);
 
-        $queery->andFilterWhere([
+        $query->andFilterHaving([
+            'plazas - COUNT(r.id)' => $this->plazas_libres,
+        ]);
+
+        $query->andFilterWhere([
             'like',
             'c.denominacion',
             $this->getAttribute('compania.denominacion'),

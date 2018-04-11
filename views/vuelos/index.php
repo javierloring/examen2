@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'llegada:datetime',
             'plazas',
             'precio:currency',
+            'plazas_libres',        
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
