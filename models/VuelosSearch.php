@@ -60,7 +60,7 @@ class VuelosSearch extends Vuelos
 
         $this->load($params);
 
-        if (!$this->validate()) {
+        if (!$this  ->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
@@ -73,6 +73,7 @@ class VuelosSearch extends Vuelos
             'asc' => ['plazas_libres' => SORT_ASC],
             'desc' => ['plazas_libres' => SORT_DESC],
         ];
+
         $dataProvider->sort->attributes['origen.codigo'] = [
             'asc' => ['o.codigo' => SORT_ASC],
             'desc' => ['o.codigo' => SORT_DESC],
@@ -106,8 +107,7 @@ class VuelosSearch extends Vuelos
 
         $query->andFilterWhere([
             'like',
-            'c.denominacion',
-            $this->getAttribute('compania.denominacion'),
+            'c.denominacion', $this->getAttribute('compania.denominacion'),
         ]);
 
         return $dataProvider;
