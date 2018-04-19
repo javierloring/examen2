@@ -62,7 +62,7 @@ class ReservasSearch extends Reservas
         $dataProvider->sort->attributes['vuelo.codigo'] = [
             'asc' => ['codigo' => SORT_ASC],
             'desc' => ['codigo' => SORT_DESC],
-        ]
+        ];
 
         // grid filtering conditions
         $query->andFilterWhere([
