@@ -4,9 +4,10 @@ namespace app\controllers;
 
 use app\models\Reservas;
 use app\models\ReservasSearch;
+use app\models\Vuelos;
 use Yii;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -76,6 +77,8 @@ class ReservasController extends Controller
      */
     public function actionCreate($vuelo_id)
     {
+        $this->comprobarVuelosDisponibles($vuelo_id);
+
         $model = new Reservas([
             'usuario_id' => Yii::$app->user->id,
             'vuelo_id' => $vuelo_id,
@@ -87,7 +90,7 @@ class ReservasController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'asientosLibres' =>$model->vuelo->asientosLibres,
+            'asientosLibres' => $model->vuelo->asientosLibres,
         ]);
     }
 
@@ -139,5 +142,26 @@ class ReservasController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function comprobarVuelosDisponibles($vuelo_id)
+    {
+        $vuelo = Vuelos::findOne($vuelo_id);
+
+        if ($vuelo === null) {
+            Yii::$app->session->setFlash('error', 'El vuelo no existe.');
+            return $this->redirect(['vuelos/index']);
+        }
+
+        //la \ es porque DateTime esta definido en el espacio global
+        if (new \DateTime($vuelo->salida) <= new \DateTime()) {
+            Yii::$app->session->setFlash('error', 'El vuelo ya ha salido.');
+            return $this->redirect(['vuelos/index']);
+        }
+
+        if ($vuelo->plazas_libres <= 0) {
+            Yii::$app->session->setFlash('error', 'el vuelo no tiene plazas libres.');
+            return $this->redirect(['vuelos/index']);
+        }
     }
 }
